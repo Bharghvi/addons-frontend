@@ -21,7 +21,6 @@ import {
   INSTALL_FAILED,
   TRACKING_TYPE_EXTENSION,
   UNINSTALLED,
-  UNINSTALLING,
 } from 'core/constants';
 import AddonCompatibilityError from 'disco/components/AddonCompatibilityError';
 import { loadedAddons } from 'disco/components/DiscoPane';
@@ -203,31 +202,6 @@ describe(__filename, () => {
     it('does not normally render an error', () => {
       const root = renderAddon({ addon: result, ...result });
       expect(root.find('.notification.error')).toHaveLength(0);
-    });
-
-    it('renders a default restart notification', () => {
-      const data = { ...result, needsRestart: true };
-      const root = renderAddon({ addon: data, ...data });
-      const restartNotice = root.find('.notification.restart p');
-      expect(restartNotice.html()).toContain(
-        'Please restart Firefox to use this add-on.',
-      );
-    });
-
-    it('renders a uninstallation restart notification', () => {
-      const data = { ...result, needsRestart: true, status: UNINSTALLING };
-      const root = renderAddon({ addon: data, ...data });
-      const restartNotice = root.find('.notification.restart p');
-
-      expect(restartNotice.html()).toContain(
-        'This add-on will be uninstalled after you restart Firefox.',
-      );
-    });
-
-    it('does not normally render a restart notification', () => {
-      const root = renderAddon({ addon: result, ...result });
-
-      expect(root.find('.notification.restart')).toHaveLength(0);
     });
 
     it('renders the heading', () => {
